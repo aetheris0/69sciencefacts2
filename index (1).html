@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>69 Science Facts</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: "Georgia", "Times New Roman", serif;
+        background: #00c8ff;
+        color: #000000;
+        overflow-x: hidden;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    /* SCIENCE PAGE (LAYER 1) */
+    #sciencePage {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #e6f9ff, #b9ecff);
+        color: #000;
+    }
+
+    .science-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px 60px;
+    }
+
+    #heroBanner {
+        background: linear-gradient(135deg, #dff6ff, #ffffff);
+        border-radius: 18px;
+        padding: 30px 28px 26px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        margin-bottom: 32px;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    #heroTitle {
+        font-size: 42px;
+        margin: 0 0 8px;
+        letter-spacing: 1px;
+    }
+
+    #heroSubtitle {
+        font-size: 17px;
+        margin: 0 0 14px;
+        max-width: 650px;
+    }
+
+    #heroUnderline {
+        width: 90px;
+        height: 3px;
+        background: #00a4d6;
+        border-radius: 999px;
+        margin-top: 6px;
+    }
+
+    #factsHeader {
+        margin-top: 32px;
+        margin-bottom: 10px;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    #factsSub {
+        margin: 0 0 20px;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    #factsGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+        margin-top: 10px;
+    }
+
+    .factCard {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 14px;
+        padding: 14px 16px 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        font-size: 14px;
+        line-height: 1.5;
+        border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .factNumber {
+        font-weight: bold;
+        margin-bottom: 6px;
+        font-size: 13px;
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    #footerNote {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 13px;
+        opacity: 0.8;
+    }
+
+    /* CLUB 69 LAYER (LAYER 2) */
+
+    body.club69-active {
+        background: #050505;
+        color: white;
+        font-family: Consolas, monospace;
+    }
+
+    #clubWrapper {
+        display: none;
+    }
+
+    #intro {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: #050505;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 40px;
+        font-size: 22px;
+        opacity: 1;
+        transition: opacity 1.5s ease-in-out;
+        z-index: 9999;
+    }
+
+    .purple { color: #A020F0; }
+    .blue { color: #00C8FF; }
+    .pink { color: #FF2EC4; }
+    .green { color: #39FF14; }
+
+    .glitch {
+        animation: flicker 0.25s infinite alternate;
+    }
+
+    @keyframes flicker {
+        0% { opacity: 1; }
+        50% { opacity: 0.6; transform: translateX(1px); }
+        100% { opacity: 1; transform: translateX(-1px); }
+    }
+
+    #main {
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+        padding: 40px 20px 60px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    #main h1 {
+        text-align: center;
+        color: #A020F0;
+        margin-bottom: 28px;
+    }
+
+    .grid {
+        display: flex;
+        gap: 25px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        width: 260px;
+        height: 200px;
+        background: #111;
+        border: 2px solid #222;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.85;
+    }
+
+    .card:hover {
+        border-color: white;
+        transform: scale(1.05);
+    }
+
+    .label {
+        position: absolute;
+        bottom: -30px;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        opacity: 0;
+        transition: 0.3s;
+        text-shadow: 0 0 6px rgba(0,0,0,0.8);
+    }
+
+    .card:hover .label {
+        opacity: 1;
+        bottom: 10px;
+    }
+
+    .loaderScreen {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: #050505;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 9999;
+        font-size: 22px;
+    }
+
+    #backBtn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: #FF2EC4;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: none;
+        z-index: 99999;
+    }
+
+    #fullscreenBtn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #00C8FF;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: none;
+        z-index: 99999;
+    }
+
+    #descriptionBox {
+        width: 100%;
+        margin: 40px auto 20px;
+        background: #0a0a0a;
+        border: 2px solid #00C8FF;
+        border-radius: 12px;
+        padding: 20px;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    #toolsSection {
+        margin-top: 40px;
+    }
+
+    #toolsSection h2 {
+        margin-bottom: 16px;
+        color: #00C8FF;
+    }
+
+    .tools-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .tool-card {
+        width: 260px;
+        height: 200px;
+        background: #111;
+        border-radius: 12px;
+        border: 2px solid #222;
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition: 0.25s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 14px;
+    }
+
+    .tool-card:hover {
+        border-color: #00C8FF;
+        transform: scale(1.05);
+    }
+
+    .tool-card img {
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+        margin-bottom: 10px;
+    }
+
+    .tool-title {
+        font-size: 18px;
+        margin-bottom: 4px;
+    }
+
+    .tool-desc {
+        font-size: 13px;
+        opacity: 0.8;
+        padding: 0 10px;
+        text-align: center;
+    }
+</style>
+
+<script>
+/* SECRET CODE LISTENER FOR "club69" */
+let secretBuffer = "";
+
+document.addEventListener("keydown", (e) => {
+    if (e.key.length > 1) return;
+    secretBuffer += e.key.toLowerCase();
+    if (secretBuffer.length > 10) {
+        secretBuffer = secretBuffer.slice(-10);
+    }
+    if (secretBuffer.includes("club69")) {
+        activateClub69();
+    }
+});
+
+function activateClub69() {
+    if (document.body.classList.contains("club69-active")) return;
+
+    document.body.classList.add("club69-active");
+
+    const sciencePage = document.getElementById("sciencePage");
+    const clubWrapper = document.getElementById("clubWrapper");
+    sciencePage.style.display = "none";
+    clubWrapper.style.display = "block";
+
+    setTimeout(() => {
+        const intro = document.getElementById("intro");
+        const main = document.getElementById("main");
+
+        intro.style.opacity = 0;
+
+        intro.addEventListener("transitionend", () => {
+            intro.style.display = "none";
+            main.style.opacity = 1;
+        }, { once: true });
+
+    }, 500);
+}
+
+/* GAME HUB LOGIC */
+function loadGame(id, file) {
+    document.getElementById("main").style.display = "none";
+    document.getElementById("backBtn").style.display = "block";
+    document.getElementById("fullscreenBtn").style.display = "block";
+
+    let screen = document.getElementById(id);
+    screen.style.display = "flex";
+
+    setTimeout(() => {
+        screen.innerHTML = `
+            <iframe id="gameFrame" src="${file}" style="
+                width:100vw;
+                height:100vh;
+                border:none;
+                background:black;
+            "></iframe>
+        `;
+    }, 2500);
+}
+
+function goBack() {
+    location.reload();
+}
+
+function toggleFullscreen() {
+    let frame = document.getElementById("gameFrame");
+    if (frame && frame.requestFullscreen) frame.requestFullscreen();
+}
+</script>
+
+</head>
+<body>
+
+<!-- LAYER 1: SCIENCE FACTS PAGE -->
+<div id="sciencePage">
+    <div class="science-inner">
+        <section id="heroBanner">
+            <h1 id="heroTitle">69 Science Facts</h1>
+            <p id="heroSubtitle">
+                A curated collection of curious, surprising, and mind‑bending facts about our universe, our planet,
+                and ourselves — all in one place.
+            </p>
+            <div id="heroUnderline"></div>
+        </section>
+
+        <h2 id="factsHeader">Explore the Facts</h2>
+        <p id="factsSub">
+            Scroll through all 69 facts below. Each one highlights something remarkable about physics, biology,
+            astronomy, Earth science, or everyday life.
+        </p>
+
+        <div id="factsGrid">
+            <div class="factCard">
+                <div class="factNumber">Fact #1</div>
+                The Sun loses about 4 million tons of mass every second as it radiates energy into space.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #2</div>
+                A single teaspoon of healthy soil can contain more microorganisms than there are humans on Earth.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #3</div>
+                Lightning strikes the planet roughly 8 million times every day, heating the air to extreme temperatures.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #4</div>
+                Your stomach replaces its lining every few days to prevent its own acid from digesting the tissue.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #5</div>
+                The human nose is capable of distinguishing more than one trillion different scents.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #6</div>
+                A day on Mercury is longer than a year on Mercury because of its slow rotation.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #7</div>
+                Some jellyfish can revert to a younger stage of life, effectively restarting their life cycle.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #8</div>
+                Earth’s magnetic field has flipped many times in the past, with north and south poles swapping places.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #9</div>
+                The coldest known place in the universe is actually a laboratory on Earth using laser cooling techniques.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #10</div>
+                A single cloud can weigh more than a million pounds due to the water droplets it contains.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #11</div>
+                The Amazon rainforest helps produce a significant portion of the oxygen cycled through Earth’s atmosphere.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #12</div>
+                By weight, human bones are stronger than concrete, yet they remain flexible enough to absorb impacts.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #13</div>
+                The deepest part of the ocean, the Mariana Trench, reaches nearly 11,000 meters below sea level.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #14</div>
+                Saturn is so low in density that, in theory, it could float in a giant bathtub of water.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #15</div>
+                A single human hair can support up to about 100 grams of weight before breaking.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #16</div>
+                Venus, not Mercury, is the hottest planet in our solar system due to its thick greenhouse atmosphere.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #17</div>
+                Some metals, such as sodium and potassium, react violently and can explode when dropped into water.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #18</div>
+                Observations show that the universe is expanding faster now than it did in the distant past.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #19</div>
+                A cockroach can live for about a week without its head before it dies from dehydration.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #20</div>
+                The human brain uses roughly 20 percent of the body’s total energy, even at rest.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #21</div>
+                Octopuses have three hearts and a complex nervous system with additional “mini-brains” in their arms.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #22</div>
+                Light travels at about 300,000 kilometers per second in a vacuum, the fastest speed in the universe.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #23</div>
+                A blue whale’s heart can be as large as a small car and weigh several hundred kilograms.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #24</div>
+                Some plants can respond to vibrations and may grow differently when exposed to certain sounds.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #25</div>
+                The Milky Way galaxy is on a slow collision course with the neighboring Andromeda galaxy.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #26</div>
+                The carbon in your body could be used to make thousands of standard graphite pencils.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #27</div>
+                Earth’s inner core is estimated to be as hot as the surface of the Sun.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #28</div>
+                Some frogs can freeze solid during winter and thaw back to life when temperatures rise.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #29</div>
+                The Great Barrier Reef is the largest living structure on Earth and can be seen from space.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #30</div>
+                A day on Earth is slowly getting longer as the planet’s rotation gradually slows down.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #31</div>
+                Honey can last for thousands of years without spoiling because bacteria struggle to grow in it.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #32</div>
+                The human eye can distinguish around 10 million different colors under ideal conditions.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #33</div>
+                Sharks have existed on Earth for hundreds of millions of years, predating trees.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #34</div>
+                The average person blinks about 15,000 to 20,000 times each day.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #35</div>
+                Space is silent because sound waves need a medium like air or water to travel.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #36</div>
+                The Moon is slowly drifting away from Earth at a rate of a few centimeters per year.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #37</div>
+                A bolt of lightning can be several times hotter than the surface of the Sun.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #38</div>
+                Your taste buds have a lifespan of about 10 days before they are replaced.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #39</div>
+                Olympus Mons on Mars is the largest volcano in the solar system, towering over Mount Everest.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #40</div>
+                Some turtles can absorb oxygen through specialized structures near their rear ends while underwater.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #41</div>
+                The human body emits a very faint natural glow that is invisible to the naked eye.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #42</div>
+                Earth is constantly bombarded by tiny particles of space dust, adding tons of material each day.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #43</div>
+                Some snails can enter a deep sleep-like state and remain inactive for years.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #44</div>
+                The strongest muscle in the human body by size is the masseter, used for chewing.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #45</div>
+                The observable universe contains more stars than there are grains of sand on all Earth’s beaches.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #46</div>
+                Butterflies taste with their feet using special receptors on their legs.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #47</div>
+                The fastest wind speeds recorded on Earth have exceeded 250 miles per hour during extreme storms.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #48</div>
+                The human heart beats around 100,000 times per day, pumping thousands of liters of blood.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #49</div>
+                Some lizards can squirt blood from their eyes as a defense mechanism against predators.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #50</div>
+                The Pacific Ocean is larger than all of Earth’s landmasses combined.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #51</div>
+                Your brain generates enough electrical power to light a small low-wattage bulb.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #52</div>
+                One of the highest temperatures recorded on Earth was over 56°C (134°F) in Death Valley.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #53</div>
+                A group of flamingos is called a “flamboyance,” reflecting their bright colors and social behavior.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #54</div>
+                Earth’s rotation is gradually slowing, which means days are becoming very slightly longer over time.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #55</div>
+                The mantis shrimp can punch with such speed that it creates tiny bubbles that briefly reach extreme temperatures.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #56</div>
+                A typical fluffy cumulus cloud can contain hundreds of thousands of kilograms of water.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #57</div>
+                Humans share about 60 percent of their DNA with bananas, reflecting deep evolutionary connections.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #58</div>
+                The deepest humans have ever drilled into Earth is only a small fraction of the distance to the core.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #59</div>
+                A day on Venus is longer than its year because it rotates extremely slowly on its axis.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #60</div>
+                The human liver can regenerate much of its mass even after significant damage or surgical removal.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #61</div>
+                Some of the largest known stars are more than a thousand times wider than our Sun.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #62</div>
+                Raindrops are not teardrop-shaped; they are more like flattened spheres or hamburger buns as they fall.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #63</div>
+                One of the coldest temperatures recorded on Earth was below −89°C (−128°F) in Antarctica.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #64</div>
+                A hummingbird’s heart can beat more than 1,000 times per minute during intense activity.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #65</div>
+                Earth’s atmosphere extends thousands of kilometers into space, gradually thinning with altitude.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #66</div>
+                Some spiders can travel long distances by “ballooning,” using silk to catch electric fields and wind.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #67</div>
+                One of the oldest known living organisms is a clonal tree system estimated to be around 9,500 years old.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #68</div>
+                The human body is made up of roughly 37 trillion individual cells working together.
+            </div>
+            <div class="factCard">
+                <div class="factNumber">Fact #69</div>
+                The universe is estimated to be about 13.8 billion years old based on observations of cosmic expansion.
+            </div>
+        </div>
+
+        <div id="footerNote">
+            This page is for educational and informational purposes.  
+            Stay curious, keep questioning, and explore beyond the obvious.
+        </div>
+    </div>
+</div>
+
+<!-- LAYER 2: CLUB 69 GAME HUB -->
+<div id="clubWrapper">
+
+    <div id="backBtn" onclick="goBack()">⬅ BACK</div>
+    <div id="fullscreenBtn" onclick="toggleFullscreen()">⛶ FULLSCREEN</div>
+
+    <div id="intro">
+        <div class="purple glitch">> ACCESSING_CLUB_69...</div>
+        <div class="blue glitch">> C0NN3CTI0N_ST4BL3...</div>
+        <div class="pink glitch">> W3LC0M3, <span class="green">0UTS1D3R_//</span></div>
+    </div>
+
+    <div id="main">
+        <h1>CLUB 69 — GAME PORTAL</h1>
+
+        <div class="grid">
+
+            <!-- 1v1.lol -->
+            <div class="card" onclick="loadGame('g1v1', '1v1-lol.html')">
+                <img src="https://img.utdstc.com/icon/983/22a/98322a3b2be892eed31589906ffd949b68bcccc9a21ba562987965b5ec6bc6de:200" alt="1v1.lol">
+                <div class="label">1V1.LOL</div>
+            </div>
+
+            <!-- Drive Mad -->
+            <div class="card" onclick="loadGame('driveMad', 'drivemady.html')">
+                <img src="https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/4abc77cf2ca8a1ca37416249429501f4/drive-mad.png" alt="Drive Mad">
+                <div class="label">DRIVE MAD</div>
+            </div>
+
+            <!-- Eaglercraft Wurst -->
+            <div class="card" onclick="loadGame('hackLoad', 'eagler-hack.html')">
+                <img src="https://avatarfiles.alphacoders.com/353/thumb-1920-353897.jpg" alt="Eaglercraft Wurst">
+                <div class="label">EAGLERCRAFT WURST CLIENT EDITION</div>
+            </div>
+
+            <!-- Johnny Trigger -->
+            <div class="card" onclick="loadGame('johnny', 'johnny-trigger.html')">
+                <img src="https://play-lh.googleusercontent.com/pEH-pYG8v1WmNjk3haRt6bR4b6pUpvDsQLtVB-xsxt-SR9O6cX6OxnM0him5joRq8A" alt="Johnny Trigger">
+                <div class="label">JOHNNY TRIGGER</div>
+            </div>
+
+            <!-- Ragdoll Archers -->
+            <div class="card" onclick="loadGame('ragArch', 'archers.html')">
+                <img src="https://imgs.crazygames.com/ragdoll-archers_1x1/20250926080758/ragdoll-archers_1x1-cover?format=auto&quality=100&metadata=none&width=1200" alt="Ragdoll Archers">
+                <div class="label">RAGDOLL ARCHERS</div>
+            </div>
+
+            <!-- Ragdoll Drop -->
+            <div class="card" onclick="loadGame('ragDrop', 'ragdoll-drop.html')">
+                <img src="https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/518d4d2ed6c3c1b00930ba6313783c94/ragdoll-drop.jfif" alt="Ragdoll Drop">
+                <div class="label">RAGDOLL DROP</div>
+            </div>
+
+            <!-- Ragdoll Hit -->
+            <div class="card" onclick="loadGame('ragHit', 'ragdoll.html')">
+                <img src="https://img.poki-cdn.com/cdn-cgi/image/q=78,scq=50,width=1200,height=1200,fit=cover,f=png/3c892779be9dabb3589586c83ad3eeed/ragdoll-hit.png" alt="Ragdoll Hit">
+                <div class="label">RAGDOLL HIT</div>
+            </div>
+
+            <!-- Roblox (no tutorial, direct link) -->
+            <div class="card" onclick="loadGame('robloxLoad', 'https://whowillsurvive.coopfire.com/main.html')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Roblox_%282025%29_%28App_Icon%29.svg/250px-Roblox_%282025%29_%28App_Icon%29.svg.png" alt="Roblox">
+                <div class="label">ROBLOX</div>
+            </div>
+
+            <!-- Slope Plus -->
+            <div class="card" onclick="loadGame('slope', 'slopeplus.html')">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQo3vWFS8c9R5ihJE91yxb5vklRntjWgmxrw&s" alt="Slope Plus">
+                <div class="label">SLOPE PLUS</div>
+            </div>
+
+            <!-- Survival Race -->
+            <div class="card" onclick="loadGame('survival', 'survival-race.html')">
+                <img src="https://geometrydashfullversion.io/cache/data/image/game/survival-race/survival-race-m200x200.webp" alt="Survival Race">
+                <div class="label">SURVIVAL RACE</div>
+            </div>
+
+            <!-- Tiny Fishing -->
+            <div class="card" onclick="loadGame('tinyFish', 'tiny-fishing.html')">
+                <img src="https://www.coolmathgames.com/sites/default/files/tiny-fishing-square-icon.png" alt="Tiny Fishing">
+                <div class="label">TINY FISHING</div>
+            </div>
+
+        </div> <!-- END GAME GRID -->
+
+        <div id="toolsSection">
+            <h2>Tools & Utilities</h2>
+            <div class="tools-grid">
+
+                <!-- Blooket Bot Tool -->
+                <a href="https://blooketbot-bv98.onrender.com/" target="_blank" style="text-decoration:none;">
+                    <div class="tool-card">
+                        <!-- Save your uploaded Blooket logo as 'blooket-logo.png' in the same folder as this file -->
+                        <img src="blooket-logo.png" alt="Blooket Bot">
+                        <div class="tool-title">Blooket Bot</div>
+                        <div class="tool-desc">
+                            External tool site for Blooket utilities. Opens in a new tab outside the portal.
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div id="descriptionBox">
+            <h2 style="color:#00C8FF;">About This Portal</h2>
+            <p>
+                This is the CLUB 69 game portal, layered beneath a science-themed homepage.  
+                It features a collection of browser games and external tools presented in a glitchy neon interface.  
+                Use fullscreen mode for a more immersive experience, and navigate back at any time using the back button.
+            </p>
+        </div>
+    </div> <!-- END MAIN -->
+
+    <!-- LOADING SCREENS -->
+    <div id="g1v1" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_1V1.L0L...</div>
+        <div class="blue glitch">> B00T1NG_3NG1N3...</div>
+    </div>
+
+    <div id="driveMad" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_DR1V3_M4D...</div>
+        <div class="blue glitch">> B00T1NG_C4R_PHYS1CS...</div>
+    </div>
+
+    <div id="hackLoad" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_WURST_CL13NT...</div>
+        <div class="blue glitch">> 3NG1N3_B00T...</div>
+    </div>
+
+    <div id="johnny" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_J0HNNY_TR1GG3R...</div>
+        <div class="blue glitch">> PR3P4R1NG_4CT10N...</div>
+    </div>
+
+    <div id="ragArch" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_R4GD0LL_4RCH3RS...</div>
+        <div class="blue glitch">> L04D1NG_PHYS1CS...</div>
+    </div>
+
+    <div id="ragDrop" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_R4GD0LL_DR0P...</div>
+        <div class="blue glitch">> PR3P4R1NG_1MP4CT...</div>
+    </div>
+
+    <div id="ragHit" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_R4GD0LL_H1T...</div>
+        <div class="blue glitch">> L04D1NG_3N3MY_41...</div>
+    </div>
+
+    <div id="robloxLoad" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_R0BL0X...</div>
+        <div class="blue glitch">> C0NN3CT1NG...</div>
+    </div>
+
+    <div id="slope" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_SL0P3_PLUS...</div>
+        <div class="blue glitch">> PR3P4R1NG_SP33D...</div>
+    </div>
+
+    <div id="survival" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_SURV1V4L_R4C3...</div>
+        <div class="blue glitch">> G3TT1NG_TR4CK_R34DY...</div>
+    </div>
+
+    <div id="tinyFish" class="loaderScreen">
+        <div class="purple glitch">> L04D1NG_T1NY_F1SH1NG...</div>
+        <div class="blue glitch">> SP4WNING_F1SH...</div>
+    </div>
+
+</div> <!-- END CLUB WRAPPER -->
+
+</body>
+</html>
